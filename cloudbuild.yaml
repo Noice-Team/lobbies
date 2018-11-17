@@ -1,0 +1,4 @@
+steps:
+- name: 'gcr.io/$PROJECT_ID/gcloud-maven'
+  args: ['mvn', 'appengine:deploy']
+#--stop-previous-version
