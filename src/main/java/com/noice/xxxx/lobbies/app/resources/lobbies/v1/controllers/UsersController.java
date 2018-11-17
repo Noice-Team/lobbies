@@ -18,6 +18,7 @@ public class UsersController {
 	@Autowired
 	private LobbiesDao dao;
 
+	
 	@RequestMapping(value = NAME, method = RequestMethod.GET)
 	public List<LobbyDto> listUsers() throws DatabaseException {
 		return this.dao.getLobbies();
