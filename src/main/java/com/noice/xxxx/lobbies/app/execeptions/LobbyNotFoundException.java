@@ -1,6 +1,6 @@
 package com.noice.xxxx.lobbies.app.execeptions;
 
-public class UserNotFoundException extends Exception{
+public class LobbyNotFoundException extends Exception{
 
 	/**
 	 * 
