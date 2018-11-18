@@ -23,7 +23,7 @@ import com.noice.xxxx.lobbies.app.services.create.CreateLobbyInput;
 import com.noice.xxxx.lobbies.app.services.create.CreateLobbyService;
 
 @RestController
-public class UsersController {
+public class LobbyController {
 	public static final String NAME = "/lobbies";
 
 	public static final String TOKEN = "FIREBASE_ID_TOKEN";
@@ -56,6 +56,6 @@ public class UsersController {
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(created).toUri();		
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).header("Access-Control-Allow-Origin", "*").build();
 	}
 }
