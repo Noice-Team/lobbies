@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.noice.xxxx.lobbies.app.resources.lobbies.v1.controllers.LobbyController;
+
 @SpringBootApplication
 public class AppApplication {
 
@@ -18,7 +20,7 @@ public class AppApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/lobbies").allowedOrigins("http://localhost:4200");
+				registry.addMapping(LobbyController.NAME).allowedOrigins("http://localhost:4200");
 			}
 		};
 	}
