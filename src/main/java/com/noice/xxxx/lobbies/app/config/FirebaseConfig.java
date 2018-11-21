@@ -17,7 +17,7 @@ import com.google.firebase.cloud.FirestoreClient;
 public class FirebaseConfig {
 
 	@Value("${firebase.app}")
-	private static String appId;
+	private String appId;
 
 	private static boolean isInitialized = false;
 
@@ -35,10 +35,11 @@ public class FirebaseConfig {
 	}
 	
 	
-	private static void initialize() throws IOException {
+	private void initialize() throws IOException {
 		if (isInitialized) {
 			return;
 		}
+		
 		GoogleCredentials credentials = GoogleCredentials.getApplicationDefault();
 		FirebaseOptions options = new FirebaseOptions.Builder().setCredentials(credentials).setProjectId(appId).build();
 		FirebaseApp.initializeApp(options);
