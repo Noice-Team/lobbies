@@ -20,7 +20,7 @@ public class AppApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping(LobbyController.NAME).allowedOrigins("http://localhost:4200");
+				registry.addMapping(LobbyController.NAME).allowedOrigins("*");
 			}
 		};
 	}

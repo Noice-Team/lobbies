@@ -37,11 +37,13 @@ public class LobbyController {
 
 	
 	@GetMapping(value = NAME)
+	@CrossOrigin(origins = "*")
 	public List<LobbyDto> getAllLobbies() throws DatabaseException {
 		return this.dao.getLobbies();
 	}
 	
 	@GetMapping(value = NAME+"/{id}")
+	@CrossOrigin(origins = "*")
 	public LobbyDto getLobby(
 		@PathVariable("id") String id) throws DatabaseException, LobbyNotFoundException {
 		return this.dao.getLobby(id);
@@ -49,7 +51,7 @@ public class LobbyController {
 	
 	@PostMapping(value = NAME)
 	@ResponseBody
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<LobbyDto> createLobby(
 		@RequestHeader(value=TOKEN) String authToken,
 		@RequestBody CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException {
