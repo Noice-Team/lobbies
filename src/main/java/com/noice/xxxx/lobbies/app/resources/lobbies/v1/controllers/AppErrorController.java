@@ -2,6 +2,7 @@ package com.noice.xxxx.lobbies.app.resources.lobbies.v1.controllers;
 
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -30,9 +31,10 @@ public class AppErrorController implements ErrorController{
     public String handleError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
+        String msg = (String)request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
         return String.format("<html><body><h2>Error Page</h2><div>Status code: <b>%s</b></div>"
                         + "<div>Exception Message: <b>%s</b></div><body></html>",
-                statusCode, exception==null? "N/A": exception.getMessage());
+                statusCode, exception==null? msg: exception.getMessage());
     }
 
     @Override
