@@ -68,4 +68,10 @@ public class LobbiesDao {
 		LobbyDto model = snapshot.toObject(LobbyDto.class);
 		return model;
 	}
+
+	public void save(LobbyDto lobby) {
+		db.collection(LOBBIES_COLLECTION)
+				.document(lobby.get_id())
+				.set(lobby);
+	}
 }

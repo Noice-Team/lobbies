@@ -1,6 +1,6 @@
 package com.noice.xxxx.lobbies.app.execeptions;
 
-public class IllegalParameterException extends Exception{
+public class IllegalParameterException extends LobbyException{
 
 	/**
 	 * 
@@ -33,4 +33,8 @@ public class IllegalParameterException extends Exception{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String getCode() {
+		return "00002";
+	}
 }

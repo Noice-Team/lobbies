@@ -1,6 +1,6 @@
 package com.noice.xxxx.lobbies.app.execeptions;
 
-public class DatabaseException extends Exception {
+public class DatabaseException extends LobbyException {
 
 	public DatabaseException() {
 		super();
@@ -15,4 +15,8 @@ public class DatabaseException extends Exception {
 	 */
 	private static final long serialVersionUID = 8791386L;
 
+	@Override
+	public String getCode() {
+		return "00003";
+	}
 }

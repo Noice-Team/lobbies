@@ -1,6 +1,6 @@
 package com.noice.xxxx.lobbies.app.execeptions;
 
-public class AuthenticationRequiredException extends Exception {
+public class AuthenticationRequiredException extends LobbyException {
 
 	public AuthenticationRequiredException() {
 		super("Authentication required");
@@ -11,4 +11,8 @@ public class AuthenticationRequiredException extends Exception {
 	 */
 	private static final long serialVersionUID = 4755484602396509428L;
 
+	@Override
+	public String getCode() {
+		return "00004";
+	}
 }

@@ -15,11 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
-import com.noice.xxxx.lobbies.app.execeptions.AuthenticationRequiredException;
-import com.noice.xxxx.lobbies.app.execeptions.DatabaseException;
 import com.noice.xxxx.lobbies.app.execeptions.ErrorDetails;
-import com.noice.xxxx.lobbies.app.execeptions.IllegalParameterException;
-import com.noice.xxxx.lobbies.app.execeptions.LobbyNotFoundException;
+import com.noice.xxxx.lobbies.app.execeptions.LobbyException;
 
 @ControllerAdvice	
 @RestController
@@ -43,31 +40,10 @@ public class AppErrorController implements ErrorController{
         return PATH;
     }
     
-    @ExceptionHandler(DatabaseException.class)
-    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(DatabaseException ex, WebRequest request) {
+    @ExceptionHandler(LobbyException.class)
+    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(LobbyException ex, WebRequest request) {
       ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
-          request.getDescription(false));
+          request.getDescription(false), ex.getCode());
       return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    
-    @ExceptionHandler(AuthenticationRequiredException.class)
-    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(AuthenticationRequiredException ex, WebRequest request) {
-      ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
-          request.getDescription(false));
-      return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
-    }
-    
-    @ExceptionHandler(LobbyNotFoundException.class)
-    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(LobbyNotFoundException ex, WebRequest request) {
-      ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
-          request.getDescription(false));
-      return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
-    
-    @ExceptionHandler(IllegalParameterException.class)
-    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(IllegalParameterException ex, WebRequest request) {
-      ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
-          request.getDescription(false));
-      return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 }
