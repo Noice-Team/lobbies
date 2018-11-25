@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import com.noice.xxxx.lobbies.app.execeptions.AuthenticationRequiredException;
 import com.noice.xxxx.lobbies.app.execeptions.DatabaseException;
 import com.noice.xxxx.lobbies.app.execeptions.ErrorDetails;
+import com.noice.xxxx.lobbies.app.execeptions.IllegalParameterException;
 import com.noice.xxxx.lobbies.app.execeptions.LobbyNotFoundException;
 
 @ControllerAdvice	
@@ -58,6 +59,13 @@ public class AppErrorController implements ErrorController{
     
     @ExceptionHandler(LobbyNotFoundException.class)
     public final ResponseEntity<ErrorDetails> handleUserNotFoundException(LobbyNotFoundException ex, WebRequest request) {
+      ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
+          request.getDescription(false));
+      return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(IllegalParameterException.class)
+    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(IllegalParameterException ex, WebRequest request) {
       ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(),
           request.getDescription(false));
       return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);

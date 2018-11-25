@@ -17,5 +17,6 @@ public class CreateLobbyInput implements Serializable {
 	private static final long serialVersionUID = -5084863284870557052L;
 
 	private String _name;
-	private GameType _type;
+	private GameType _gameType;
+	private int _size;
 }

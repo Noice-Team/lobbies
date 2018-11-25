@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.noice.xxxx.lobbies.app.db.lobbies.LobbiesDao;
 import com.noice.xxxx.lobbies.app.execeptions.AuthenticationRequiredException;
 import com.noice.xxxx.lobbies.app.execeptions.DatabaseException;
+import com.noice.xxxx.lobbies.app.execeptions.IllegalParameterException;
 import com.noice.xxxx.lobbies.app.execeptions.LobbyNotFoundException;
 import com.noice.xxxx.lobbies.app.resources.lobbies.v1.dto.LobbyDto;
 import com.noice.xxxx.lobbies.app.services.create.CreateLobbyInput;
@@ -54,7 +55,7 @@ public class LobbyController {
 	@CrossOrigin(origins = "*")
 	public ResponseEntity<LobbyDto> createLobby(
 		@RequestHeader(value=TOKEN) String authToken,
-		@RequestBody CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException {
+		@RequestBody CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException, IllegalParameterException {
 
 		String created = createService.create(authToken, data);
 

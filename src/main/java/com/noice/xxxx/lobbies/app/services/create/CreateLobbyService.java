@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseToken;
 import com.noice.xxxx.lobbies.app.db.lobbies.LobbiesDao;
 import com.noice.xxxx.lobbies.app.execeptions.AuthenticationRequiredException;
 import com.noice.xxxx.lobbies.app.execeptions.DatabaseException;
+import com.noice.xxxx.lobbies.app.execeptions.IllegalParameterException;
 import com.noice.xxxx.lobbies.app.resources.lobbies.v1.dto.LobbyDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,13 +28,16 @@ public class CreateLobbyService {
 	@Autowired
 	LobbiesDao dao;
 	
-	public String create(String authToken, CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException {
+	public String create(String authToken, CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException, IllegalParameterException {
 		String uid = this.controlInput(authToken, data);
 		return createLobby(uid, data);
 	}
 	
-	public String controlInput(String authToken, CreateLobbyInput data) throws AuthenticationRequiredException {
+	public String controlInput(String authToken, CreateLobbyInput data) throws AuthenticationRequiredException, IllegalParameterException {
 		String uid = controlFireAuth(authToken);
+		if(data.get_size() < 1 ) {
+			throw new IllegalParameterException("size");
+		}
 		return uid;
 	}
 	
@@ -64,8 +68,9 @@ public class CreateLobbyService {
 		return dao.create(LobbyDto.builder()
 			._owner(uid)
 			._creationDate(new Date())
-			._gameType(data.get_type())
+			._gameType(data.get_gameType())
 			._name(data.get_name())
+			._size(data.get_size())
 			._members(list )
 		.build());
 	}
