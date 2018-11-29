@@ -43,12 +43,12 @@ public class CreateLobbyService {
 		list.add(uid);
 		
 		return dao.create(LobbyDto.builder()
-			._owner(uid)
-			._creationDate(new Date())
-			._gameType(data.get_gameType())
-			._name(data.get_name())
-			._size(data.get_size())
-			._members(list )
+			.owner(uid)
+			.creationDate(new Date())
+			.gameType(data.get_gameType())
+			.name(data.get_name())
+			.size(data.get_size())
+			.members(list )
 		.build());
 	}
 }

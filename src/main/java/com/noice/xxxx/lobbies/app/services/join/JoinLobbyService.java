@@ -34,14 +34,14 @@ public class JoinLobbyService {
 	}
 
 	public void controlInput(String authToken, String id, LobbyDto lobby, String userId) throws LobbyAlreadyJoinedException, LobbyFullException {
-		if(lobby.get_members() == null) {
-			lobby.set_members(new ArrayList<>());
-			lobby.get_members().add(lobby.get_owner());
+		if(lobby.getMembers() == null) {
+			lobby.setMembers(new ArrayList<>());
+			lobby.getMembers().add(lobby.getOwner());
 		}
-		if(lobby.get_members().contains(userId)) {
+		if(lobby.getMembers().contains(userId)) {
 			throw new LobbyAlreadyJoinedException(); 
 		}
-		if(lobby.get_size() <= lobby.get_members().size()) {
+		if(lobby.getSize() <= lobby.getMembers().size()) {
 			throw new LobbyFullException();
 		}
 	}
@@ -51,7 +51,7 @@ public class JoinLobbyService {
 	}
 	
 	private void add(LobbyDto lobby, String uid) {
-		lobby.get_members().add(uid);
+		lobby.getMembers().add(uid);
 		this.dao.save(lobby);
 	}
 }

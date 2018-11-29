@@ -71,7 +71,7 @@ public class LobbiesDao {
 
 	public void save(LobbyDto lobby) {
 		db.collection(LOBBIES_COLLECTION)
-				.document(lobby.get_id())
+				.document(lobby.getId())
 				.set(lobby);
 	}
 }
