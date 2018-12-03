@@ -34,6 +34,7 @@ public class JoinLobbyService {
 	}
 
 	public void controlInput(String authToken, String id, LobbyDto lobby, String userId) throws LobbyAlreadyJoinedException, LobbyFullException {
+		log.debug("control join lobby", id, lobby);
 		if(lobby.getMembers() == null) {
 			lobby.setMembers(new ArrayList<>());
 			lobby.getMembers().add(lobby.getOwner());

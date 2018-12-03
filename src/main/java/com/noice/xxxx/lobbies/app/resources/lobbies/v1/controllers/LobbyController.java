@@ -20,9 +20,13 @@ import com.noice.xxxx.lobbies.app.execeptions.AuthenticationRequiredException;
 import com.noice.xxxx.lobbies.app.execeptions.DatabaseException;
 import com.noice.xxxx.lobbies.app.execeptions.IllegalParameterException;
 import com.noice.xxxx.lobbies.app.execeptions.LobbyNotFoundException;
+import com.noice.xxxx.lobbies.app.execeptions.join.LobbyAlreadyJoinedException;
+import com.noice.xxxx.lobbies.app.execeptions.join.LobbyFullException;
 import com.noice.xxxx.lobbies.app.resources.lobbies.v1.dto.LobbyDto;
 import com.noice.xxxx.lobbies.app.services.create.CreateLobbyInput;
 import com.noice.xxxx.lobbies.app.services.create.CreateLobbyService;
+import com.noice.xxxx.lobbies.app.services.join.JoinLobbyInput;
+import com.noice.xxxx.lobbies.app.services.join.JoinLobbyService;
 
 @RestController
 public class LobbyController {
@@ -31,28 +35,13 @@ public class LobbyController {
 	public static final String TOKEN = "FIREBASE_ID_TOKEN";
 	
 	@Autowired
-	private LobbiesDao dao;
+	private CreateLobbyService createService;
 	
 	@Autowired
-	private CreateLobbyService createService;
-
-	
-	@GetMapping(value = NAME)
-	@CrossOrigin(origins = "*")
-	public List<LobbyDto> getAllLobbies() throws DatabaseException {
-		return this.dao.getLobbies();
-	}
-	
-	@GetMapping(value = NAME+"/{id}")
-	@CrossOrigin(origins = "*")
-	public LobbyDto getLobby(
-		@PathVariable("id") String id) throws DatabaseException, LobbyNotFoundException {
-		return this.dao.getLobby(id);
-	}
+	private JoinLobbyService joinService;
 	
 	@PostMapping(value = NAME)
 	@ResponseBody
-	@CrossOrigin(origins = "*")
 	public ResponseEntity<LobbyDto> createLobby(
 		@RequestHeader(value=TOKEN) String authToken,
 		@RequestBody CreateLobbyInput data) throws AuthenticationRequiredException, DatabaseException, IllegalParameterException {
@@ -61,6 +50,19 @@ public class LobbyController {
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(created).toUri();		
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PostMapping(value = NAME)
+	@ResponseBody
+	public ResponseEntity<LobbyDto> joinLobby(
+		@RequestHeader(value=TOKEN) String authToken,
+		@RequestBody JoinLobbyInput data) throws LobbyNotFoundException, DatabaseException, AuthenticationRequiredException, LobbyAlreadyJoinedException, LobbyFullException  {
+
+		joinService.join(authToken, data.getId());
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(data.getId()).toUri();		
 		return ResponseEntity.created(location).build();
 	}
 }
